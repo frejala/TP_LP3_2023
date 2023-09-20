@@ -24,8 +24,24 @@ void do_some_work()
     pthread_cleanup_push(deallocate_buffer, temp_buffer);
     /* Do some work here that might call pthread_exit or might be
     cancelled... */
-    /* Unregister the cleanup handler. Because we pass a nonzero value,
-    this actually performs the cleanup by calling
-    deallocate_buffer. */
+    pthread_exit(NULL);
+
+    // unregister the cleanup handler because the thread succesfully terminated
     pthread_cleanup_pop(1);
+}
+
+void *function(void *_)
+{
+    do_some_work();
+    return NULL;
+}
+
+// Thread Cleanup Handler
+int main(int argc, char *argv[])
+{
+    printf("Example of thread cleanup handler\n");
+    pthread_t hilo;
+    pthread_create(&hilo, NULL, function, NULL);
+    pthread_join(hilo, NULL);
+    return 0;
 }
