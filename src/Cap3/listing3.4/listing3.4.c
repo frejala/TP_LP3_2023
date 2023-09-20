@@ -5,7 +5,7 @@
 /* Spawn a child process running a new program. PROGRAM is the name
 of the program to run; the path will be searched for this program.
 ARG_LIST is a NULL-terminated list of character strings to be
-passed as the program’s argument list. Returns the process ID of
+passed as the program's argument list. Returns the process ID of
 the spawned process. */
 int spawn(char *program, char **arg_list)
 {

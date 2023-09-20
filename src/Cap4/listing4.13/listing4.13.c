@@ -1,4 +1,5 @@
 #include <pthread.h>
+#include <stdio.h>
 
 int thread_flag;
 pthread_mutex_t thread_flag_mutex;
@@ -7,6 +8,10 @@ void initialize_flag()
 {
     pthread_mutex_init(&thread_flag_mutex, NULL);
     thread_flag = 0;
+}
+void do_work()
+{
+    printf("do_work\n");
 }
 
 /* Calls do_work repeatedly while the thread flag is set; otherwise spins */

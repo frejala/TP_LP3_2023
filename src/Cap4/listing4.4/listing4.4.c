@@ -17,7 +17,7 @@ void *compute_prime(void *arg)
                 is_prime = 0;
                 break;
             }
-        /* Is this the prime number we’re looking for? */
+        /* Is this the prime number we're looking for? */
         if (is_prime)
         {
             if (--n == 0)
@@ -50,6 +50,6 @@ int main()
     /* Wait for the prime number thread to complete, and get the result. */
     pthread_join(thread, (void *)&prime);
     /* Print the largest prime it computed. */
-    printf("The % dth prime number is % d.\n", which_prime, prime);
+    printf("The % dth prime number is %d.\n", which_prime, prime);
     return 0;
 }

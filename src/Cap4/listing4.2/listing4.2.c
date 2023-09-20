@@ -23,8 +23,8 @@ void *char_print(void *parameters)
 int main()
 {
     pthread_t thread1_id;
-    pthread_t thread2_id;
     struct char_print_parms thread1_args;
+    pthread_t thread2_id;
     struct char_print_parms thread2_args;
     /* Create a new thread to print 30,000 ’x’s. */
     thread1_args.character = 'x';

@@ -1,4 +1,6 @@
 #include <pthread.h>
+#include <stdio.h>
+
 void *thread_function(void *thread_arg)
 {
     double initial_balance = 1000.0;
