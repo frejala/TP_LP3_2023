@@ -54,3 +54,19 @@ char *read_temp_file(temp_file_handle temp_file, size_t *length)
     
     return buffer;
 }
+
+int main() {
+    char data[] = "Hola mundo";
+    size_t data_length = sizeof(data) - 1;
+
+    temp_file_handle temp_file = write_temp_file(data, data_length);
+    printf("Datos escritos en el archivo temporal.\n");
+
+    size_t read_length;
+    char* read_data = read_temp_file(temp_file, &read_length);
+    printf("Datos leídos desde el archivo temporal:\n%s\n", read_data);
+
+    free(read_data);
+
+    return 0;
+}
