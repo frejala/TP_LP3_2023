@@ -24,8 +24,6 @@ listing%:
 		rm *.o; \
 	elif [ "$(listing)" = "listing2.9" ]; then \
 		g++ $(CFLAGS) $(obj_dir)/listing2.9.c -o $(arch_dest); \
-	elif [ "$(listing)" = "listing2.4"]; then \
-		gcc $(CFLAGS) $(obj_dir)/listing2.4.c -o $(arch_dest); \
 	elif [ "$(listing)" = "listing3.4" ]; then \
 		mkdir -p build/Cap3/; \
 		gcc -o ./build/Cap3/listing3.4 ./src/Cap3/listing3.4/*; \
