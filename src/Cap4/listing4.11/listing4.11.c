@@ -1,44 +1,72 @@
 #include <malloc.h>
 #include <pthread.h>
-struct job
+typedef struct job
 {
-    /* Link field for linked list. */
     struct job *next;
-    /* Other fields describing work to be done... */
-};
-/* A linked list of pending jobs. */
+    int job_id;
+} job;
+
 struct job *job_queue;
-/* A mutex protecting job_queue. */
+job *last;
+job *first;
 pthread_mutex_t job_queue_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-/* Process queued jobs until the queue is empty. */
+void process_job(int thread_id, int job_id)
+{
+    printf("Thread %d, job %d\n", thread_id, job_id);
+    int random_number = 1 + rand() % 3;
+    sleep(random_number);
+    return;
+}
+
 void *thread_function(void *arg)
 {
+    int *thread_id = (int *)arg;
     while (1)
     {
-        struct job *next_job;
-        /* Lock the mutex on the job queue. */
         pthread_mutex_lock(&job_queue_mutex);
-        /* Now it's safe to check if the queue is empty. */
-        if (job_queue == NULL)
-            next_job = NULL;
-        else
+        if (last == NULL)
         {
-            /* Get the next available job. */
-            next_job = job_queue;
-            /* Remove this job from the list. */
-            job_queue = job_queue->next;
+            pthread_mutex_unlock(&job_queue_mutex);
+            return NULL;
         }
-        /* Unlock the mutex on the job queue because we're done with the
-        queue for now. */
+        job *next_job = last;
+        last = last->next;
         pthread_mutex_unlock(&job_queue_mutex);
-        /* Was the queue empty? If so, end the thread. */
-        if (next_job == NULL)
-            break;
-        /* Carry out the work. */
-        process_job(next_job);
-        /* Clean up. */
+
+        process_job(*thread_id, next_job->job_id);
         free(next_job);
     }
     return NULL;
+}
+
+int main(int argc, char const *argv[])
+{
+    sleep(2);
+    job *temp = malloc(sizeof(job));
+    temp->job_id = 0;
+    last = temp;
+    first = temp;
+
+    for (int i = 1; i < 100; i++)
+    {
+        job *n = malloc(sizeof(job));
+        n->job_id = i;
+        first->next = n;
+        first = n;
+    }
+
+    pthread_t threads[10];
+    int ids[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    for (int i = 0; i < 10; i++)
+    {
+        pthread_create(&threads[i], NULL, thread_function, &ids[i]);
+    }
+
+    for (int i = 0; i < 10; i++)
+    {
+        pthread_join(threads[i], NULL);
+    }
+
+    return 0;
 }
