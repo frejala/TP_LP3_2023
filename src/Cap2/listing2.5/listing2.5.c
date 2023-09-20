@@ -56,7 +56,7 @@ char *read_temp_file(temp_file_handle temp_file, size_t *length)
 }
 
 int main() {
-    char data[] = "Hola mundo";
+    char data[] = "Hola mundo!";
     size_t data_length = sizeof(data) - 1;
 
     temp_file_handle temp_file = write_temp_file(data, data_length);
