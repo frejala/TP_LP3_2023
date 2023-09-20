@@ -26,6 +26,13 @@ void *thread_function(void *args)
     pthread_setspecific(thread_log_key, thread_log);
     write_to_thread_log("Thread starting.dd");
     /* Do work here... */
+    for (int i = 0; i < 10000; i++)
+    {
+        if (i % 1000 == 0)
+        {
+            printf("n: %d\n", i);
+        }
+    }
     return NULL;
 }
 int main()

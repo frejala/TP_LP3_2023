@@ -36,11 +36,14 @@ int main()
     /* Start the computing thread, up to the 5,000th prime number. */
     pthread_create(&thread, NULL, &compute_prime, &which_prime);
     /* Do some other work here... */
-    for (size_t i = 0; i < 100000; i++)
+    for (int i = 0; i < 100; i++)
     {
-        if (i % 10000 == 0)
+        for (int j = 0; j < 1000; j++)
         {
-            printf("Doing some other work here... \n");
+            if (j % 25 == 0 && i % 25 == 0)
+            {
+                printf("n: %d\n", j);
+            }
         }
     }
 
